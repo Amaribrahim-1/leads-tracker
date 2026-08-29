@@ -1,0 +1,89 @@
+---
+description: Confirmed tech stack, versions, folder structure, naming, brand color, and git format for the Leads Tracker project.
+alwaysApply: true
+---
+
+# Stack & versions (do not re-litigate)
+
+- Next.js 16 (App Router), TypeScript
+- Tailwind CSS v4
+- Supabase (Postgres + Auth) — single table `leads`, owner-only RLS
+  (`auth.uid() = user_id`)
+- Zod — one schema for the lead form (`leadSchema`)
+- React Hook Form + `zodResolver`
+- Zustand — UI-only state: active status filter, modal open/closed + mode
+  (add/edit) + which lead is being edited
+- TanStack Query — fetching `leads`, mutations (create/update/delete).
+  **Optimistic update on inline status change is the main new concept
+  this project is meant to teach.**
+- UI components: shadcn/ui — use it for styling/primitives, don't
+  hand-build what it already provides
+- Icons: Lucide (via shadcn/ui's Nova preset) — no second icon library,
+  same convention as Areej and the portfolio
+- Dates: use `date-fns` for any date formatting/manipulation — don't
+  hand-roll date logic
+
+# When to use a library vs. build it yourself
+
+- Core learning stack (Zod, Zustand, TanStack Query, RHF, Supabase/SQL,
+  TypeScript patterns) — Amar builds this himself, no shortcuts.
+- Anything outside that list where a small, well-known library fully
+  solves the problem (styling primitives → shadcn/ui, dates → date-fns) —
+  use the library, don't reinvent it.
+
+# Folder structure & naming
+
+Same conventions as the Areej project — reuse them, don't redefine from
+scratch:
+
+- Feature-based structure under `features/leads/` (`components/`,
+  `hooks/`, `api/`, `schema.ts`, `store.ts`)
+- Folders `kebab-case`, component files `PascalCase.tsx`, hooks
+  `camelCase.ts` prefixed `use`
+- Zustand store exported as `useLeadsUIStore`, Zod schema `leadSchema`
+- Components never call `supabase.from(...)` directly — only through
+  `use*` hooks calling pure `get*` / mutate helpers in
+  `features/leads/api/`
+
+# Brand color (reuse only — do not redesign)
+
+Source: Amar's live portfolio palette. Paste as-is — no fifth hue, no
+mint accent.
+
+```css
+:root {
+  --forest: #0e2a26;
+  --cream: #f3eee4;
+  --mustard: #e4b52a;
+  --sage: #9bb3a0;
+
+  --background: var(--forest);
+  --foreground: var(--cream);
+  --primary: var(--mustard);
+  --primary-foreground: var(--forest);
+  --ring: var(--mustard);
+}
+```
+
+- Dark surfaces: forest background, cream text, sage for quiet/muted
+  labels, mustard as the one accent (CTA, hover, focus ring).
+- Light surfaces (if any): cream background, forest text.
+- Full ramps, contrast tables, and reuse notes: `my-color-system.md`
+  (Amar's reference file) — this block above is the only part that
+  actually needs to be wired into `globals.css`.
+- Wiring this into `globals.css` + the Tailwind theme is a config-only
+  task (see the code-writing exceptions in `mentor-behavior.mdc`) —
+  Cursor can do this one directly.
+
+# Git conventions
+
+- Commit format: `type(scope): description` — e.g.
+  `feat(leads): add status filter`, `fix(leads): prevent double submit on
+create`.
+- Types: `feat`, `fix`, `refactor`, `style`, `docs`, `chore`, `test`.
+- Work directly on `main`, commit at each logical checkpoint inside a
+  task (see the git workflow in `mentor-behavior.mdc`). No
+  feature-branch-per-task by default at this project's size.
+- After every finished task, Cursor tells Amar the exact commit
+  command(s) and message(s) to use — not optional, see
+  `mentor-behavior.mdc`.

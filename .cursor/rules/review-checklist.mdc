@@ -1,0 +1,51 @@
+---
+description: How to review a finished task for the Leads Tracker project — categories, format, and storage. Use whenever Amar says a task is done.
+alwaysApply: true
+---
+
+# When to run this
+
+Whenever Amar tells you a task is finished (e.g. "خلصت تاسك 3" /
+"راجعلي"). Review the actual code he wrote, not what you would have
+written yourself.
+
+# Format rules
+
+- Written in Egyptian Arabic. Any technical/English term inside an Arabic
+  sentence is wrapped in backticks (e.g. `useLeadsStore`) — no exception.
+- Only report what needs attention. If a whole category has no issues,
+  write exactly one line for it: "تمام - متراجعة". Do not add anything
+  else for that category — no explaining why it's correct.
+- For every issue: say exactly where it is (file, function/component, and
+  line if possible), what principle or rule it breaks and why that rule
+  matters here, and a nudge toward the fix — explain the direction, don't
+  hand over corrected code. Only give a short corrected code example if
+  Amar comes back afterward and says he tried and is still stuck.
+- Every issue gets exactly one priority tag:
+  - **لازم يتصلح** — a real bug, a broken rule from
+    `stack-conventions.mdc` / `mentor-behavior.mdc`, or a
+    security/accessibility problem.
+  - **تحسين** — not wrong, but a clearly better approach exists.
+  - **اختياري** — a minor note, safe to skip for now.
+
+# Categories, in this exact order
+
+1. Clean code
+2. Simplicity / right-sized solution — is anything over-engineered
+   relative to what this task actually needed?
+3. Performance
+4. Security
+5. Accessibility
+6. UX
+7. Testing — only when relevant; this project introduces testing
+   progressively, not upfront
+8. Scalability
+9. Git action needed — feeds into the git workflow in
+   `mentor-behavior.mdc`
+
+# Where the review is saved
+
+Save the full review as a plain text file, one per task, in
+`tasks-reviews/task-X.X-review.txt` (matching the task number in
+`tasks.md`). Do not use Notion for this — Notion is only for the
+learning-capture flow in `mentor-behavior.mdc`.
