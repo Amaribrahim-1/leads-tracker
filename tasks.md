@@ -44,7 +44,7 @@ code, so nothing gets built in a random spot and moved later.
 **Cursor's role:** creates the empty folders/files directly — no code
 logic in them yet, just scaffolding.
 
-- [ ] Task 0.2 — Wire brand colors into Tailwind v4 / shadcn
+- [x] Task 0.2 — Wire brand colors into Tailwind v4 / shadcn
 
 **What:** replace the default shadcn neutral palette in
 `src/app/globals.css` with the brand color block from
