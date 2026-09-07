@@ -30,7 +30,7 @@ planning one.
 
 ## Setup (config-only — Cursor does these directly)
 
-### Task 0.1 — Set up the feature-based folder structure
+- [x] Task 0.1 — Set up the feature-based folder structure
 
 **What:** create `src/features/leads/` with the subfolders
 `components/`, `hooks/`, `api/`, plus starter files `schema.ts` and
@@ -44,7 +44,7 @@ code, so nothing gets built in a random spot and moved later.
 **Cursor's role:** creates the empty folders/files directly — no code
 logic in them yet, just scaffolding.
 
-### Task 0.2 — Wire brand colors into Tailwind v4 / shadcn
+- [ ] Task 0.2 — Wire brand colors into Tailwind v4 / shadcn
 
 **What:** replace the default shadcn neutral palette in
 `src/app/globals.css` with the brand color block from
@@ -64,7 +64,7 @@ guessing.
 
 ---
 
-## Task 1 — Design the `leads` table + RLS policy (schema)
+- [ ] Task 1 — Design the `leads` table + RLS policy (schema)
 
 **Term — RLS (Row-Level Security):** a Postgres feature that filters which
 rows a query is even allowed to touch, enforced by the database itself,
@@ -89,7 +89,7 @@ migration.
 
 ---
 
-## Task 2 — Supabase client setup + login (auth)
+- [ ] Task 2 — Supabase client setup + login (auth)
 
 **What:** create the Supabase client instances the App Router needs (a
 browser client and a server client — same pattern as Areej), a single
@@ -107,7 +107,7 @@ redirect should work — you write the code.
 
 ---
 
-## Task 3 — TypeScript types for a Lead (types)
+- [ ] Task 3 — TypeScript types for a Lead (types)
 
 **What:** hand-write a `Lead` type and a `LeadStatus` union of the five
 fixed status values, matching the table shape from Task 1. Decide where
@@ -125,7 +125,7 @@ it.
 
 ---
 
-## Task 4 — Zustand UI store (`useLeadsUIStore`)
+- [ ] Task 4 — Zustand UI store (`useLeadsUIStore`)
 
 **What:** the one UI-state store for this feature, holding exactly what
 `stack-conventions.mdc` specifies: the active status filter, whether the
@@ -143,7 +143,7 @@ it solo.
 
 ---
 
-## Task 5 — Query hook: fetch leads (`useLeads`)
+- [ ] Task 5 — Query hook: fetch leads (`useLeads`)
 
 **Term — TanStack Query:** a library that manages "server state" — data
 that actually lives in your database, not just in the browser — handling
@@ -165,7 +165,7 @@ data size — you write the hook and helper.
 
 ---
 
-## Task 6 — Main page UI: stat cards + filter + list (read-only)
+- [ ] Task 6 — Main page UI: stat cards + filter + list (read-only)
 
 **What:** the main page, read-only first — no add/edit/delete yet, just
 proving data flows end-to-end onto the screen. Covers: the leads list
@@ -182,7 +182,7 @@ and JSX are yours.
 
 ---
 
-## Task 7 — Zod schema for the lead form (`leadSchema`)
+- [ ] Task 7 — Zod schema for the lead form (`leadSchema`)
 
 **What:** the one Zod schema per `stack-conventions.mdc`, covering every
 form field (`name` required, `source` / `notes` / `next_follow_up`
@@ -199,7 +199,7 @@ and the schema-vs-type tradeoff above — you write the schema.
 
 ---
 
-## Task 8 — Add/Edit lead modal + form + create/update mutations (UI + mutations)
+- [ ] Task 8 — Add/Edit lead modal + form + create/update mutations (UI + mutations)
 
 **Term — React Hook Form (RHF):** a library that manages form state
 (values, validation errors, submit handling) without hand-writing an
@@ -224,7 +224,7 @@ mutations) if it starts feeling big.
 
 ---
 
-## Task 9 — Delete with confirmation (mutation)
+- [ ] Task 9 — Delete with confirmation (mutation)
 
 **What:** a delete action per row that requires a confirmation step before
 doing anything destructive — a shadcn/ui `AlertDialog` fits this exactly,
@@ -241,7 +241,7 @@ it's already available — you wire the mutation and UI.
 
 ---
 
-## Task 10 — Inline status change with optimistic update
+- [ ] Task 10 — Inline status change with optimistic update
 
 **Term — optimistic update:** updating what's on screen immediately when
 the user acts (e.g. picks a new status from a dropdown), *before* the
@@ -270,7 +270,7 @@ actual hook and dropdown are still yours to write.
 
 ---
 
-## Task 11 — Sort by `next_follow_up` (optional, first to cut)
+- [ ] Task 11 — Sort by `next_follow_up` (optional, first to cut)
 
 **What:** a sort control (or just a fixed default sort) on the leads list
 by `next_follow_up`, soonest first. Use `date-fns` for any date
