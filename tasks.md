@@ -51,7 +51,7 @@ logic in them yet, just scaffolding.
 `stack-conventions.mdc` (`--forest`, `--cream`, `--mustard`, `--sage`,
 mapped to `--background` / `--foreground` / `--primary` /
 `--primary-foreground` / `--ring`), keeping the existing `@theme inline`
-variable *names* as-is (shadcn/Nova components reference those names) and
+variable _names_ as-is (shadcn/Nova components reference those names) and
 only changing the underlying values.
 
 **Why:** one-time visual foundation — every component built afterward
@@ -64,7 +64,7 @@ guessing.
 
 ---
 
-- [ ] Task 1 — Design the `leads` table + RLS policy (schema)
+- [x] Task 1 — Design the `leads` table + RLS policy (schema)
 
 **Term — RLS (Row-Level Security):** a Postgres feature that filters which
 rows a query is even allowed to touch, enforced by the database itself,
@@ -245,7 +245,7 @@ it's already available — you wire the mutation and UI.
 - [ ] Task 10 — Inline status change with optimistic update
 
 **Term — optimistic update:** updating what's on screen immediately when
-the user acts (e.g. picks a new status from a dropdown), *before* the
+the user acts (e.g. picks a new status from a dropdown), _before_ the
 server has confirmed anything — then rolling back only if the request
 actually fails. The payoff: the UI feels instant instead of waiting on a
 network round-trip for something this small. **This is the main new
