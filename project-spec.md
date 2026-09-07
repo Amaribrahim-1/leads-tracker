@@ -80,7 +80,7 @@ One table: `leads`, scoped to its owner via `user_id` + RLS
 
 ### Status values (fixed, English keys — no admin-managed categories)
 
-`contacted` → `proposal_sent` → `negotiating` → `won` / `lost`
+`idea` → `contacted` → `proposal_sent` → `negotiating` → `won` / `lost`
 
 The business meaning of each status is already documented in Amar's own
 glossary file — refer there, do not redefine it here.

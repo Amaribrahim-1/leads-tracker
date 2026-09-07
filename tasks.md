@@ -74,8 +74,8 @@ won't leak or allow edits to a row that isn't yours.
 **What:** write the SQL migration for one table, `leads`, with the columns
 described in `project-spec.md` (`id`, `user_id`, `name`, `source`,
 `status`, `notes`, `next_follow_up`, `created_at`, `updated_at`), a check
-constraint restricting `status` to the fixed list (`contacted` →
-`proposal_sent` → `negotiating` → `won` / `lost`), and an RLS policy so a
+constraint restricting `status` to the fixed list (`idea` →
+`contacted` → `proposal_sent` → `negotiating` → `won` / `lost`), and an RLS policy so a
 row is only readable/writable when `auth.uid() = user_id`.
 
 **Why first:** every later task (types, hooks, UI) is either describing or
@@ -109,7 +109,7 @@ redirect should work — you write the code.
 
 - [ ] Task 3 — TypeScript types for a Lead (types)
 
-**What:** hand-write a `Lead` type and a `LeadStatus` union of the five
+**What:** hand-write a `Lead` type and a `LeadStatus` union of the six
 fixed status values, matching the table shape from Task 1. Decide where
 it lives (e.g. `src/features/leads/types.ts`, or inferred later from the
 Zod schema in Task 7 — worth a quick discussion on the tradeoff before you
@@ -172,7 +172,8 @@ proving data flows end-to-end onto the screen. Covers: the leads list
 (shadcn/ui primitives for structure), the status filter control wired to
 `useLeadsUIStore`, the empty state for zero leads, and — optional, first
 thing to cut if time is short per the scope section — the KPI-style stat
-cards showing a count per status.
+cards showing a count per status (`idea` gets its own KPI card like
+the other five).
 
 **Why split from the form:** keeps this task's surface small — you're
 only proving "data in Supabase shows up on screen," not building forms.
@@ -186,7 +187,7 @@ and JSX are yours.
 
 **What:** the one Zod schema per `stack-conventions.mdc`, covering every
 form field (`name` required, `source` / `notes` / `next_follow_up`
-optional, `status` restricted to the fixed list). Worth deciding here
+optional, `status` restricted to the six-value fixed list). Worth deciding here
 whether the form's input type comes from `z.infer<typeof leadSchema>` or
 stays fully separate from Task 3's `Lead` type — a real simplicity
 tradeoff, not a formality.
