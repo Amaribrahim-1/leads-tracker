@@ -89,7 +89,7 @@ migration.
 
 ---
 
-- [ ] Task 2 — Supabase client setup + login (auth)
+- [x] Task 2 — Supabase client setup + login (auth)
 
 **What:** create the Supabase client instances the App Router needs (a
 browser client and a server client — same pattern as Areej), a single
