@@ -143,6 +143,23 @@ it solo.
 
 ---
 
+- [ ] Checkpoint — Refresh the auth session in `proxy.ts` (before Task 5)
+
+**What:** add `src/proxy.ts` so `@supabase/ssr` can refresh the auth token
+on each request. Server Components cannot write cookies; without this,
+a session that expires (~1 hour) fails closed (`getClaims` empty, RLS
+rejects) with no obvious login-form error.
+
+**Why here, not in Task 2:** email/password login and the home-page
+redirect work without it. The first place a stale cookie actually hurts
+is Task 5, when `useLeads` hits the `leads` table.
+
+**Cursor's role:** talk through `getAll` / `setAll` on the request and
+response — you write the file. Same official Next.js SSR pattern as
+Task 2's server client.
+
+---
+
 - [ ] Task 5 — Query hook: fetch leads (`useLeads`)
 
 **Term — TanStack Query:** a library that manages "server state" — data
