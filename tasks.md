@@ -180,6 +180,27 @@ together — schema, auth, types, and store all feed into this one hook.
 key) and whether filtering happens server-side or client-side at this
 data size — you write the hook and helper.
 
+**After it works — optional proof (do not skip writing** `proxy.ts`**):**
+Temporarily rename `src/proxy.ts` (e.g. `src/proxy.ts.off`) and reload.
+The list may still load if `getLeads` uses the browser client —
+`client.ts` can write cookies, so "page didn't break" is not the proof.
+Check these instead:
+
+1. DevTools → Application → Cookies. The `Expires` column (~2027) is
+   how long the browser keeps the cookie box, not how long the
+   `access token` inside is valid.
+2. Open a `sb-...-auth-token` value. It starts with `base64-`. Strip
+   that prefix, decode, and look at `expires_at` (or the JWT `exp`
+   inside `access_token`). That timestamp is ~1 hour from the last
+   _saved_ refresh. If home/`useLeads` still work while `expires_at`
+   is already in the past, the server refreshed in memory and never
+   wrote the cookie — the bug the proxy exists to fix.
+3. Network → the document request for `/`. With the proxy, a stale
+   token produces `Set-Cookie` on that response. Without it, the
+   Server Component render does not.
+
+Put `src/proxy.ts` back when you're done looking.
+
 ---
 
 - [ ] Task 6 — Main page UI: stat cards + filter + list (read-only)
