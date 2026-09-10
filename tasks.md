@@ -125,7 +125,7 @@ it.
 
 ---
 
-- [ ] Task 4 — Zustand UI store (`useLeadsUIStore`)
+- [x] Task 4 — Zustand UI store (`useLeadsUIStore`)
 
 **What:** the one UI-state store for this feature, holding exactly what
 `stack-conventions.mdc` specifies: the active status filter, whether the
