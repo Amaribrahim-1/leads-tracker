@@ -324,6 +324,77 @@ here.
 
 ---
 
+- [ ] Task 12 — Prefetch leads on the server (`prefetchQuery` + `HydrationBoundary`)
+
+**Term — prefetch + hydration:** the Server Component fetches the leads
+list _before_ the HTML is sent, writes that result into TanStack Query's
+cache shape, and sends the cache along with the page. On the browser,
+`useLeads` / `useQuery` finds `["leads"]` already filled — no loading
+spinner on first paint, no extra round-trip for the first list. After
+that, the client cache behaves exactly as it did in Tasks 5 and 10
+(filter, invalidate, optimistic update).
+
+**What:** keep the home page a Server Component (auth + `getClaims` from
+Task 2). There, `prefetchQuery` with the **same** query key as Task 5
+(`["leads"]`) and a query function that can run on the server (the
+browser `getLeads` in `client.ts` will not work here — this is the
+actual puzzle). Wrap the client list in `HydrationBoundary` with the
+dehydrated cache. `useLeads` stays the reader; it should not grow a
+second fetch path. Client-side filter from Task 5 stays in the hook —
+prefetch still loads the full list.
+
+**Why last, not after Task 5 or 6:** the pattern only pays off once a
+real list exists (Task 6) and once you already trust the query cache
+(Task 10's optimistic update writes into that same cache). Doing it
+earlier mixes two new ideas: "how the cache works" and "how the cache
+gets its first fill from the server." The app is fully usable without
+this — it is a first-paint / Server Component lesson, not a missing
+feature. Not in `project-spec.md`; added because you asked to learn it.
+Skip it if the week is gone; it is not in the same "cut first" bucket
+as Task 11 — it is extra on purpose, parked at the end so it cannot
+derail the core track.
+
+**Cursor's role:** talk through `prefetchQuery`, `dehydrate`,
+`HydrationBoundary`, and which Supabase client runs during prefetch vs
+`useQuery` — you write the page wiring. Do not replace `useLeads` with
+a server-only fetch; the point is both layers sharing one cache key.
+
+---
+
+- [ ] Task 13 — URL state: search params vs path params (status filter)
+
+**Term — URL params:** two different slots in the address bar, often
+mixed up as if they were one thing. **Path params** are pieces of the
+path (`/leads/abc-id` via a `[id]` folder). **Search params** (query
+string) are the `?key=value` part (`/?status=won`). Next App Router
+reads them differently on the server (`page` props) vs the client
+(`useSearchParams` / `useParams`). They are not interchangeable with
+Zustand: the URL survives refresh and is shareable; the store does not.
+
+**What:** one small apply-it-here, not a new screen: the status filter
+from Tasks 4–6 should be reflected in the URL (e.g. `?status=won`, and
+no param or `?status=all` for the default). Changing the filter updates
+the address bar; opening/pasting that URL lands on the same filter.
+Stay on the existing home list — do **not** add a `/leads/[id]` detail
+page. The walkthrough must still cover path params (`[id]`, `useParams`)
+so the two are distinct in your head, even though this app has no
+dynamic segment yet.
+
+**Why last:** you need a real filter control (Task 6) before the URL has
+anything to hold. Doing it during Task 4 or 5 would teach routing before
+you have felt Zustand-only UI state. Parked with Task 12 as extra
+learning, not in `project-spec.md`. The app is usable without it.
+Decide (with Cursor) whether the URL or `useLeadsUIStore` is the source
+of truth for `filter` — pick one; don't keep two copies that can drift.
+Modal open/edit stay in Zustand either way (those don't belong in the
+URL).
+
+**Cursor's role:** talk through path vs search, server vs client APIs
+in this Next version (read the App Router docs, don't guess), and the
+Zustand-vs-URL choice above — you wire the filter. No extra routes.
+
+---
+
 ## Explicitly out of scope (not tasks)
 
 Per `project-spec.md`: multiple users/sharing, notifications/reminders,
