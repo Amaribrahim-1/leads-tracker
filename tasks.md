@@ -143,7 +143,7 @@ it solo.
 
 ---
 
-- [ ] Checkpoint — Refresh the auth session in `proxy.ts` (before Task 5)
+- [x] Checkpoint — Refresh the auth session in `proxy.ts` (before Task 5)
 
 **What:** add `src/proxy.ts` so `@supabase/ssr` can refresh the auth token
 on each request. Server Components cannot write cookies; without this,
