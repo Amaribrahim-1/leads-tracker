@@ -160,7 +160,7 @@ Task 2's server client.
 
 ---
 
-- [ ] Task 5 — Query hook: fetch leads (`useLeads`)
+- [x] Task 5 — Query hook: fetch leads (`useLeads`)
 
 **Term — TanStack Query:** a library that manages "server state" — data
 that actually lives in your database, not just in the browser — handling
