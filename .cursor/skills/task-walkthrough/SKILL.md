@@ -68,7 +68,8 @@ targeted snippet only after he tried, asked, tried again, and is still
 stuck — never the whole task.
 
 On-demand concept teaching (mid-task "علّمني X"): follow the learning
-protocol in `mentor-behavior.mdc` (`docs/learning/current.txt`).
+protocol in `mentor-behavior.mdc` — a new file
+`docs/learning/<topic>.txt`, never overwrite, never `current.txt`.
 
 ## While he is writing
 

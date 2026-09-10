@@ -50,9 +50,12 @@ opposite of Areej, where AI owned the backend track. Here, Amar writes
 
 - Amar will ask you to teach him a concept mid-task when he's stuck on
   something stack-specific (syntax, a pattern, "why this over that").
-- When this happens, write the explanation into a single scratch file:
-  `docs/learning/current.txt` — overwritten every time, do not accumulate
-  history there.
+- When this happens, write the explanation into a **new** file under
+  `docs/learning/`, named after the concept in kebab-case English
+  (e.g. `docs/learning/proxy.txt`, `docs/learning/query-client.txt`).
+- Never use `docs/learning/current.txt`. Never overwrite an existing
+  learning file. If that topic name is already taken, pick a more
+  specific name or ask Amar first.
 - The explanation must cover: what problem this solves and why it's
   needed, the syntax / how to use it, and — when relevant — a comparison
   against alternatives (when to use which, and why).
