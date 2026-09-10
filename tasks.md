@@ -107,7 +107,7 @@ redirect should work — you write the code.
 
 ---
 
-- [ ] Task 3 — TypeScript types for a Lead (types)
+- [x] Task 3 — TypeScript types for a Lead (types)
 
 **What:** hand-write a `Lead` type and a `LeadStatus` union of the six
 fixed status values, matching the table shape from Task 1. Decide where
