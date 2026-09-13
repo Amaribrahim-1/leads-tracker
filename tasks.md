@@ -221,7 +221,7 @@ and JSX are yours.
 
 ---
 
-- [ ] Task 7 — Zod schema for the lead form (`leadSchema`)
+- [x] Task 7 — Zod schema for the lead form (`leadSchema`)
 
 **What:** the one Zod schema per `stack-conventions.mdc`, covering every
 form field (`name` required, `source` / `notes` / `next_follow_up`
@@ -397,7 +397,7 @@ Zustand-vs-URL choice above — you wire the filter. No extra routes.
 
 - [ ] Task 14 — Offline banner (`useOffline`)
 
-**Term — `useOffline`:** an experimental Next.js 16.3 hook from
+**Term —** `useOffline`**:** an experimental Next.js 16.3 hook from
 `next/offline`. It returns a boolean: `true` when the browser fires an
 `offline` event or a Next navigation / prefetch / Server Action fetch
 fails. Enabling `experimental.useOffline` in `next.config.ts` does two
@@ -416,7 +416,7 @@ shadcn/ui + Lucide if you want an icon; do not hand-build a toast
 system (`Toaster` is already in the layout). Banner needs a
 `role="status"` so screen readers hear the connectivity change.
 
-**What this does *not* cover:** `getLeads` / create / update / delete
+**What this does _not_ cover:** `getLeads` / create / update / delete
 go through TanStack Query + the browser Supabase client, not Server
 Actions. Those stay on TanStack's own retry policy — the official
 offline guide says that explicitly. Do not add a Server Action layer,
