@@ -395,6 +395,60 @@ Zustand-vs-URL choice above — you wire the filter. No extra routes.
 
 ---
 
+- [ ] Task 14 — Offline banner (`useOffline`)
+
+**Term — `useOffline`:** an experimental Next.js 16.3 hook from
+`next/offline`. It returns a boolean: `true` when the browser fires an
+`offline` event or a Next navigation / prefetch / Server Action fetch
+fails. Enabling `experimental.useOffline` in `next.config.ts` does two
+things: it makes the hook report real state (without the flag it always
+returns `false`), and it stops those Next-owned requests from throwing
+when the network drops — they stay pending and retry when connectivity
+returns. `useOffline` is `false` during SSR and the first hydration;
+the first accurate value is after mount.
+
+**What:** a small `OfflineBanner` Client Component (`'use client'`) that
+calls `useOffline()` and, when `true`, shows a persistent banner across
+the app (mount it in the root layout). Copy should match what this
+feature actually retries — navigations and any Next-owned request —
+not "your lead save will retry," because it will not. Use existing
+shadcn/ui + Lucide if you want an icon; do not hand-build a toast
+system (`Toaster` is already in the layout). Banner needs a
+`role="status"` so screen readers hear the connectivity change.
+
+**What this does *not* cover:** `getLeads` / create / update / delete
+go through TanStack Query + the browser Supabase client, not Server
+Actions. Those stay on TanStack's own retry policy — the official
+offline guide says that explicitly. Do not add a Server Action layer,
+a `/leads/[id]` detail page, Cache Components, Partial Prefetching, or
+a service worker just to "use" the hook. There is no detail page in
+this app (Task 13). If a list `isPending` spinner or a mutation button
+looks identical to a slow server while offline, that is expected; the
+banner is what tells the user why. Do not invent a second retry loop.
+
+**Why last:** extra learning, not in `project-spec.md`. Same parking
+lot as Tasks 12–13. The app is fully usable without it. Needs a real
+layout (and ideally the Task 6 list) so you can see the banner on a
+screen that already has loading/pending UI. Skip it if the week is
+gone. Experimental — not recommended for production; say so in the
+commit message, not a PR (this repo commits on `main`).
+
+**How to test:** official docs: `next build && next start`, not only
+`next dev`. Then Chrome DevTools → Network → Offline (or airplane
+mode). Toggle back to Online and confirm the banner hides and any
+hung Next navigation resumes without a second click. A full page
+reload while offline still fails — that needs a service worker, which
+is out of scope.
+
+**Cursor's role:** the one-line `experimental: { useOffline: true }` in
+`next.config.ts` is config-only — Cursor wires it when you start this
+task. Talk through what the flag retries vs what TanStack Query owns,
+and how to test it. You write `OfflineBanner` and mount it in
+`src/app/layout.tsx`. Likely home: `src/components/OfflineBanner.tsx`
+(app chrome, not `features/leads/`).
+
+---
+
 ## Explicitly out of scope (not tasks)
 
 Per `project-spec.md`: multiple users/sharing, notifications/reminders,
