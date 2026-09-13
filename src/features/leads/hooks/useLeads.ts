@@ -13,5 +13,5 @@ export function useLeads() {
   const leads =
     filter === "all" ? data : data?.filter((lead) => lead.status === filter);
 
-  return { leads, isPending, isError, error };
+  return { allLeads: data, leads, isPending, isError, error };
 }

@@ -1,3 +1,4 @@
+import { LeadsDashboard } from "@/features/leads/components/LeadsDashboard";
 import { getClaims } from "@/lib/supabase/getClaims";
 import { redirect } from "next/navigation";
 
@@ -10,9 +11,5 @@ export default async function Home() {
     redirect("/login");
   }
 
-  return (
-    <div>
-      <h1>Home</h1>
-    </div>
-  );
+  return <LeadsDashboard />;
 }

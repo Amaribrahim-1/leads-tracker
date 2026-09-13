@@ -203,7 +203,7 @@ Put `src/proxy.ts` back when you're done looking.
 
 ---
 
-- [ ] Task 6 — Main page UI: stat cards + filter + list (read-only)
+- [x] Task 6 — Main page UI: stat cards + filter + list (read-only)
 
 **What:** the main page, read-only first — no add/edit/delete yet, just
 proving data flows end-to-end onto the screen. Covers: the leads list
