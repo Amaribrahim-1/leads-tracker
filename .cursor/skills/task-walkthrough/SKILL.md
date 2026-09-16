@@ -9,17 +9,20 @@ description: >-
 
 # Task walkthrough
 
-Per-task session flow for this repo. Amar writes the feature code. You
-teach, unblock, and review.
+Per-task session flow for this repo. Amar writes the learning-stack
+code. You teach, unblock, review — and write presentational UI when he
+asks (modal, inputs, styling).
 
 ## Agreed flow (verbatim)
 
 إزاي بنمشي في كل تاسك
 أشرح الفكرة على أجزاء (قدّك 3)، ونتأكد إن الجزء واضح.
-إنت اللي بتكتب الكود؛ أنا توجيه وأسئلة، مش بكتب الملفات عنك.
-لو وقفت، نفك السطر / الـ syntax من غير ما أسلّمك الملف كامل.
+إنت اللي بتكتب كود الـ learning stack (hooks، schema، mutations، SQL).
+أنا توجيه وأسئلة هناك، مش بكتب الملفات دي عنك.
+الـ UI الشكلي (مودال، إنبوتس، ستايل) عليّ لما تطلبه — مش جزء التطبيق.
+لو وقفت في اللوجيك، نفك السطر / الـ syntax من غير ما أسلّمك الملف كامل.
 لما تقول «راجعلي»: مراجعة بالتشيك ليست، وبعدين أمر الـ commit. (ولو طلبت تحط المراجعة في تيكست فايل تحطه)
-الاستثناء: تاسكات الـ setup (0.1 و 0.2) أنا اللي بعملها لأن مفيهاش تعلّم + التنسيق بتاع Tailwind وكدا
+الاستثناء: تاسكات الـ setup (0.1 و 0.2) أنا اللي بعملها لأن مفيهاش تعلّم + التنسيق بتاع Tailwind وكدا + الـ UI الشكلي زي فوق
 
 ## Before you talk
 
@@ -43,8 +46,10 @@ Do these yourself when Amar says go. No 3-part lesson:
 - Pure config with no learning value (env scaffolding, tool wiring)
 - Brand/Tailwind/theme wiring in `globals.css` as described in
   `stack-conventions.mdc`
+- Presentational UI (modal chrome, inputs, styling, placeholder
+  loading/error) when Amar asks — see `mentor-behavior.mdc`
 
-Everything from Task 1 onward is Amar's code.
+Learning-stack code from Task 1 onward is Amar's.
 
 ## Teaching a task (max 3 parts)
 
@@ -63,9 +68,11 @@ Talk in Egyptian Arabic. Wrap English/technical terms in backticks.
 5. Fresher-level explanations. Simpler solution wins unless the complex
    one prevents a real current problem. See `mentor-behavior.mdc`.
 
-Do not write real project files (frontend, types, schemas, SQL). Short
-targeted snippet only after he tried, asked, tried again, and is still
-stuck — never the whole task.
+Do not write learning-stack files (types, schemas, hooks, API helpers,
+SQL, RHF wiring). Presentational UI is allowed per
+`mentor-behavior.mdc`. Short targeted snippet of learning-stack code
+only after he tried, asked, tried again, and is still stuck — never the
+whole feature.
 
 On-demand concept teaching (mid-task "علّمني X"): follow the learning
 protocol in `mentor-behavior.mdc` — a new file
@@ -93,7 +100,7 @@ for language, categories, priority tags, and "تمام - متراجعة".
 ## Do not
 
 - Start a task by dumping all 3 parts at once
-- Write the feature for him
+- Write the learning-stack feature for him
 - Re-litigate the stack
 - Expand a task past what `tasks.md` asked
 - Save a review file unsolicited

@@ -1,11 +1,15 @@
 "use client";
 
+import { Plus } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import { useLeads } from "../hooks/useLeads";
 import { useLeadsUIStore } from "../store";
 import { LeadStatus } from "../types";
 import { KpiCards } from "./KpiCards";
+import { LeadModal } from "./LeadModal";
 import { LeadsList } from "./LeadsList";
 import { StatusFilter } from "./StatusFilter";
 
@@ -13,6 +17,9 @@ export function LeadsDashboard() {
   const { allLeads, leads, isPending, isError, error } = useLeads();
   const filter = useLeadsUIStore((state) => state.filter);
   const setFilter = useLeadsUIStore((state) => state.setFilter);
+  const openAddModal = useLeadsUIStore((state) => state.openAddModal);
+  const openEditModal = useLeadsUIStore((state) => state.openEditModal);
+  const isModalOpen = useLeadsUIStore((state) => state.isModalOpen);
 
   const leadsCounts: Record<LeadStatus, number> = {
     idea: 0,
@@ -43,24 +50,31 @@ export function LeadsDashboard() {
 
       <Separator />
 
-      <KpiCards
-        counts={leadsCounts}
-        isPending={isPending}
-        isError={isError}
-      />
+      <KpiCards counts={leadsCounts} isPending={isPending} isError={isError} />
 
       <section className="flex flex-col gap-4" aria-label="Leads">
-        <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-          <h2 className="font-heading text-xl font-medium sm:text-2xl">
-            Leads
-          </h2>
-          <p className="text-muted-foreground text-base">
-            {isPending
-              ? "Loading…"
-              : isError
-                ? "Couldn't load"
-                : `${leads?.length ?? 0} shown`}
-          </p>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col gap-1">
+            <h2 className="font-heading text-xl font-medium sm:text-2xl">
+              Leads
+            </h2>
+            <p className="text-muted-foreground text-base">
+              {isPending
+                ? "Loading…"
+                : isError
+                  ? "Couldn't load"
+                  : `${leads?.length ?? 0} shown`}
+            </p>
+          </div>
+          <Button
+            onClick={openAddModal}
+            type="button"
+            size="lg"
+            className="h-11 text-base"
+          >
+            <Plus />
+            Add lead
+          </Button>
         </div>
 
         <StatusFilter value={filter} onChange={setFilter} />
@@ -71,8 +85,11 @@ export function LeadsDashboard() {
           isError={isError}
           error={error}
           filter={filter}
+          openEditModal={openEditModal}
         />
       </section>
+
+      {isModalOpen && <LeadModal />}
     </div>
   );
 }

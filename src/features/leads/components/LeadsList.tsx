@@ -1,4 +1,5 @@
 import { format, parseISO } from "date-fns";
+import { Pencil } from "lucide-react";
 
 import {
   Card,
@@ -21,6 +22,7 @@ import {
 import { Lead, LeadStatus } from "../types";
 import { LeadsEmptyState } from "./LeadsEmptyState";
 import { StatusBadge } from "./StatusBadge";
+import { Button } from "@/components/ui/button";
 
 type LeadsListProps = {
   leads: Lead[];
@@ -28,6 +30,7 @@ type LeadsListProps = {
   isError?: boolean;
   error?: Error | null;
   filter?: LeadStatus | "all";
+  openEditModal: (lead: Lead) => void;
 };
 
 function formatFollowUp(value: string | null) {
@@ -45,6 +48,7 @@ export function LeadsList({
   isError = false,
   error = null,
   filter = "all",
+  openEditModal,
 }: LeadsListProps) {
   if (isPending) {
     return <LeadsListSkeleton />;
@@ -67,7 +71,7 @@ export function LeadsList({
       <ul className="flex flex-col gap-3 md:hidden">
         {leads.map((lead) => (
           <li key={lead.id}>
-            <LeadCard lead={lead} />
+            <LeadCard lead={lead} onEdit={() => openEditModal(lead)} />
           </li>
         ))}
       </ul>
@@ -81,6 +85,9 @@ export function LeadsList({
               <TableHead className="text-base">Status</TableHead>
               <TableHead className="text-base">Next follow-up</TableHead>
               <TableHead className="px-4 text-base">Notes</TableHead>
+              <TableHead className="px-4 text-base">
+                <span className="sr-only">Actions</span>
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -99,6 +106,9 @@ export function LeadsList({
                 <TableCell className="max-w-56 truncate px-4 text-muted-foreground">
                   {lead.notes ?? "—"}
                 </TableCell>
+                <TableCell className="px-4 text-right">
+                  <EditLeadButton onClick={() => openEditModal(lead)} />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -108,7 +118,22 @@ export function LeadsList({
   );
 }
 
-function LeadCard({ lead }: { lead: Lead }) {
+function EditLeadButton({ onClick }: { onClick: () => void }) {
+  return (
+    <Button
+      type="button"
+      variant="ghost"
+      size="icon"
+      className="size-9 text-base"
+      aria-label="Edit lead"
+      onClick={onClick}
+    >
+      <Pencil />
+    </Button>
+  );
+}
+
+function LeadCard({ lead, onEdit }: { lead: Lead; onEdit: () => void }) {
   return (
     <Card>
       <CardHeader>
@@ -116,8 +141,9 @@ function LeadCard({ lead }: { lead: Lead }) {
         <CardDescription className="truncate text-base">
           {lead.source ?? "No source"}
         </CardDescription>
-        <CardAction>
+        <CardAction className="flex items-center gap-1">
           <StatusBadge status={lead.status} />
+          <EditLeadButton onClick={onEdit} />
         </CardAction>
       </CardHeader>
       <CardContent className="flex flex-col gap-1 text-base">

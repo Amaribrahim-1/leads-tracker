@@ -11,10 +11,13 @@ Two kinds of tasks in here, and they work differently:
   Per `mentor-behavior.mdc`'s code-writing exceptions, Cursor does these
   directly when you say go. They're listed explicitly here so you can see
   them happen, not so they happen silently before Task 1.
-- **Everything from Task 1 onward** — real project code. You write all of
-  it by hand. Cursor's role per task is a "talk it through" partner
-  (design tradeoffs, syntax, patterns) — never the author. Each task says
-  explicitly what Cursor's role is, so there's no ambiguity mid-task.
+- **Everything from Task 1 onward** — learning-stack code (types, Zod,
+  Zustand store logic, TanStack Query, RHF, API helpers, Supabase/SQL).
+  You write that by hand. Cursor's role per task is a "talk it through"
+  partner for that work — never the author of it. Presentational UI
+  (modal, inputs, styling) is Cursor's when you ask; it is not the
+  practice surface. Each task still says explicitly what Cursor's role
+  is, so there's no ambiguity mid-task.
 
 Order follows project-spec.md's required sequence: schema → types → query
 hooks → UI → mutations → optimistic update. A couple of things not named
@@ -238,7 +241,7 @@ and the schema-vs-type tradeoff above — you write the schema.
 
 ---
 
-- [ ] Task 8 — Add/Edit lead modal + form + create/update mutations (UI + mutations)
+- [x] Task 8 — Add/Edit lead modal + form + create/update mutations (UI + mutations)
 
 **Term — React Hook Form (RHF):** a library that manages form state
 (values, validation errors, submit handling) without hand-writing an
@@ -256,10 +259,12 @@ so the list updates without a full page reload.
 submit to, and the mutations are pointless without a form to trigger
 them.
 
-**Cursor's role:** talk through RHF + Zod wiring and TanStack Query's
-mutate-then-invalidate pattern if new to you — you write the component,
-hooks, and helpers. Feel free to split this into two commits (form, then
-mutations) if it starts feeling big.
+**Cursor's role:** write the presentational modal (Dialog, inputs,
+styling, loading/error placeholders) when asked. Talk through RHF + Zod
+wiring and TanStack Query's mutate-then-invalidate pattern if new to
+you — you write the form wiring, hooks, and helpers, including opening
+the modal and add vs edit submit. Feel free to split this into two
+commits (form, then mutations) if it starts feeling big.
 
 ---
 
@@ -275,8 +280,9 @@ Task 8.
 (create/update/delete) and has no dependency on anything not already
 built.
 
-**Cursor's role:** flag the relevant shadcn/ui component if you're unsure
-it's already available — you wire the mutation and UI.
+**Cursor's role:** write the confirmation dialog chrome (shadcn
+`AlertDialog`) if you want the UI done for you — you wire
+`useDeleteLead` / `deleteLead` and the per-row trigger.
 
 ---
 

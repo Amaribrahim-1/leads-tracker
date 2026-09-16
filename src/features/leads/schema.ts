@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const leadSchema = z.object({
-  name: z.string().min(1),
+  name: z.string().min(1, "Name is required"),
   source: z.string().optional(),
   notes: z.string().optional(),
   next_follow_up: z.string().optional(),
