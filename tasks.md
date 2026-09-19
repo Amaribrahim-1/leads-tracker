@@ -336,7 +336,7 @@ here.
 list _before_ the HTML is sent, writes that result into TanStack Query's
 cache shape, and sends the cache along with the page. On the browser,
 `useLeads` / `useQuery` finds `["leads"]` already filled — no loading
-spinner on first \*\*\*\*paint, no extra round-trip for the first list. After
+spinner on first paint, no extra round-trip for the first list. After
 that, the client cache behaves exactly as it did in Tasks 5 and 10
 (filter, invalidate, optimistic update).
 
@@ -398,7 +398,7 @@ screen readers hear that content is loading.
 
 ---
 
-- [ ] Task 13 — URL state: search params vs path params (status filter)
+- [x] Task 13 — URL state: search params vs path params (status filter)
 
 **Term — URL params:** two different slots in the address bar, often
 mixed up as if they were one thing. **Path params** are pieces of the

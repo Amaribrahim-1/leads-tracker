@@ -14,12 +14,19 @@ import { LeadsList } from "./LeadsList";
 import { StatusFilter } from "./StatusFilter";
 
 export function LeadsDashboard() {
-  const { allLeads, leads, isPending, isError, error } = useLeads();
-  const filter = useLeadsUIStore((state) => state.filter);
-  const setFilter = useLeadsUIStore((state) => state.setFilter);
+  const { allLeads, leads, filter, isPending, isError, error } = useLeads();
   const openAddModal = useLeadsUIStore((state) => state.openAddModal);
   const openEditModal = useLeadsUIStore((state) => state.openEditModal);
   const isModalOpen = useLeadsUIStore((state) => state.isModalOpen);
+
+  function setFilter(status: LeadStatus | "all") {
+    if (status === "all") {
+      window.history.replaceState(null, "", "/");
+      return;
+    }
+
+    window.history.replaceState(null, "", `/?status=${status}`);
+  }
 
   const leadsCounts: Record<LeadStatus, number> = {
     idea: 0,

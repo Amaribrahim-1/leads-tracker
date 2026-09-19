@@ -1,13 +1,11 @@
-import { Lead, LeadStatus } from "./types";
 import { create } from "zustand";
+import { Lead } from "./types";
 
 type LeadsUIStore = {
-  filter: LeadStatus | "all";
   isModalOpen: boolean;
   modalMode: "add" | "edit";
   editingLead: Lead | null;
 
-  setFilter: (filter: LeadStatus | "all") => void;
   openEditModal: (lead: Lead) => void;
   openAddModal: () => void;
   closeModal: () => void;
@@ -15,12 +13,9 @@ type LeadsUIStore = {
 
 export const useLeadsUIStore = create<LeadsUIStore>()(
   (set): LeadsUIStore => ({
-    filter: "all",
     isModalOpen: false,
     modalMode: "add",
     editingLead: null,
-
-    setFilter: (filter) => set({ filter }),
 
     openEditModal: (lead) =>
       set({
