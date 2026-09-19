@@ -23,6 +23,7 @@ import { Lead, LeadStatus } from "../types";
 import { LeadsEmptyState } from "./LeadsEmptyState";
 import { StatusBadge } from "./StatusBadge";
 import { Button } from "@/components/ui/button";
+import { DeleteLeadButton } from "./DeleteLeadButton";
 
 type LeadsListProps = {
   leads: Lead[];
@@ -71,7 +72,10 @@ export function LeadsList({
       <ul className="flex flex-col gap-3 md:hidden">
         {leads.map((lead) => (
           <li key={lead.id}>
-            <LeadCard lead={lead} onEdit={() => openEditModal(lead)} />
+            <LeadCard
+              lead={lead}
+              onEdit={() => openEditModal(lead)}
+            />
           </li>
         ))}
       </ul>
@@ -107,7 +111,13 @@ export function LeadsList({
                   {lead.notes ?? "—"}
                 </TableCell>
                 <TableCell className="px-4 text-right">
-                  <EditLeadButton onClick={() => openEditModal(lead)} />
+                  <div className="flex items-center justify-end gap-1">
+                    <EditLeadButton onClick={() => openEditModal(lead)} />
+                    <DeleteLeadButton
+                      leadId={lead.id}
+                      leadName={lead.name}
+                    />
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
@@ -133,7 +143,13 @@ function EditLeadButton({ onClick }: { onClick: () => void }) {
   );
 }
 
-function LeadCard({ lead, onEdit }: { lead: Lead; onEdit: () => void }) {
+function LeadCard({
+  lead,
+  onEdit,
+}: {
+  lead: Lead;
+  onEdit: () => void;
+}) {
   return (
     <Card>
       <CardHeader>
@@ -144,6 +160,7 @@ function LeadCard({ lead, onEdit }: { lead: Lead; onEdit: () => void }) {
         <CardAction className="flex items-center gap-1">
           <StatusBadge status={lead.status} />
           <EditLeadButton onClick={onEdit} />
+          <DeleteLeadButton leadId={lead.id} leadName={lead.name} />
         </CardAction>
       </CardHeader>
       <CardContent className="flex flex-col gap-1 text-base">
