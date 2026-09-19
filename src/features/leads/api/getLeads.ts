@@ -1,8 +1,7 @@
-import { createClient } from "@/lib/supabase/client";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { Lead } from "../types";
 
-export async function getLeads(): Promise<Lead[]> {
-  const supabase = createClient();
+export async function getLeads(supabase: SupabaseClient): Promise<Lead[]> {
   const { data, error } = await supabase
     .from("leads")
     .select("*")

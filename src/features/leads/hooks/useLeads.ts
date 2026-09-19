@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { getLeads } from "../api/getLeads";
 import { useLeadsUIStore } from "../store";
+import { createClient } from "@/lib/supabase/client";
 
 export function useLeads() {
   const filter = useLeadsUIStore((state) => state.filter);
 
   const { data, isPending, isError, error } = useQuery({
     queryKey: ["leads"],
-    queryFn: getLeads,
+    queryFn: () => getLeads(createClient()),
   });
 
   const leads =

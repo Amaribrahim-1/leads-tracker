@@ -330,13 +330,13 @@ here.
 
 ---
 
-- [ ] Task 12 — Prefetch leads on the server (`prefetchQuery` + `HydrationBoundary`)
+- [x] Task 12 — Prefetch leads on the server (`prefetchQuery` + `HydrationBoundary`)
 
 **Term — prefetch + hydration:** the Server Component fetches the leads
 list _before_ the HTML is sent, writes that result into TanStack Query's
 cache shape, and sends the cache along with the page. On the browser,
 `useLeads` / `useQuery` finds `["leads"]` already filled — no loading
-spinner on first paint, no extra round-trip for the first list. After
+spinner on first \*\*\*\*paint, no extra round-trip for the first list. After
 that, the client cache behaves exactly as it did in Tasks 5 and 10
 (filter, invalidate, optimistic update).
 
@@ -349,6 +349,15 @@ dehydrated cache. `useLeads` stays the reader; it should not grow a
 second fetch path. Client-side filter from Task 5 stays in the hook —
 prefetch still loads the full list.
 
+**API note (v5 current):** `queryClient.prefetchQuery` is deprecated and
+will be removed in v6. Use `queryClient.query` — same cache fill, but it
+**throws** if the fetch fails (unlike `prefetchQuery`, which swallowed
+errors). `dehydrate` + `HydrationBoundary` are unchanged.
+
+**Shared** `getLeads`**:** one helper that takes a `Supabase` client. The
+server prefetch passes `createClient()` from `server.ts`; `useLeads`
+passes the browser client. Same `select` / `order`, no second helper.
+
 **Why last, not after Task 5 or 6:** the pattern only pays off once a
 real list exists (Task 6) and once you already trust the query cache
 (Task 10's optimistic update writes into that same cache). Doing it
@@ -360,10 +369,32 @@ Skip it if the week is gone; it is not in the same "cut first" bucket
 as Task 11 — it is extra on purpose, parked at the end so it cannot
 derail the core track.
 
-**Cursor's role:** talk through `prefetchQuery`, `dehydrate`,
+**Cursor's role:** talk through `prefetchQuery` / `query`, `dehydrate`,
 `HydrationBoundary`, and which Supabase client runs during prefetch vs
 `useQuery` — you write the page wiring. Do not replace `useLeads` with
 a server-only fetch; the point is both layers sharing one cache key.
+
+**Extra (educational) —** `Suspense` **so the shell is not blocked:**
+`await queryClient.query(...)` on the page itself delays **any** HTML
+until `Supabase` returns (`TTFB` goes up). That is the core prefetch
+tradeoff: first paint is the real list, but the tab waits.
+
+The middle ground: keep `getClaims` + `redirect` in `Home` (so a
+logged-out visit does not flash a loading state then bounce). Move the
+prefetch into a child Server Component (`LeadsPage`) and wrap it in
+`Suspense` with a presentational fallback. The `layout` streams
+immediately; the fallback occupies the dashboard slot until the child
+finishes; then `HydrationBoundary` still delivers the filled `["leads"]`
+cache. `useLeads` stays the reader.
+
+Do **not** use a root `src/app/loading.tsx` for this. Next wraps the
+whole `page` in that file, including the auth check — `/` while logged
+out would show loading, then redirect to `/login`. Nested `Suspense`
+after `getClaims` avoids that.
+
+Call the child as `<LeadsPage />`, not `LeadsPage()` — otherwise
+`Suspense` never sees the Promise. Fallback needs `role="status"` so
+screen readers hear that content is loading.
 
 ---
 
