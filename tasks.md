@@ -315,7 +315,7 @@ actual hook and dropdown are still yours to write.
 
 ---
 
-- [ ] Task 11 — Sort by `next_follow_up` (optional, first to cut)
+- [x] Task 11 — Sort by `next_follow_up` (optional, first to cut)
 
 **What:** a sort control (or just a fixed default sort) on the leads list
 by `next_follow_up`, soonest first. Use `date-fns` for any date

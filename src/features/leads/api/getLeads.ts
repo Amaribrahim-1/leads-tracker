@@ -6,7 +6,7 @@ export async function getLeads(): Promise<Lead[]> {
   const { data, error } = await supabase
     .from("leads")
     .select("*")
-    .order("created_at");
+    .order("next_follow_up");
 
   if (error) {
     throw new Error(error.message);
