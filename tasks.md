@@ -268,7 +268,7 @@ commits (form, then mutations) if it starts feeling big.
 
 ---
 
-- [ ] Task 9 — Delete with confirmation (mutation)
+- [x] Task 9 — Delete with confirmation (mutation)
 
 **What:** a delete action per row that requires a confirmation step before
 doing anything destructive — a shadcn/ui `AlertDialog` fits this exactly,
@@ -286,7 +286,7 @@ built.
 
 ---
 
-- [ ] Task 10 — Inline status change with optimistic update
+- [x] Task 10 — Inline status change with optimistic update
 
 **Term — optimistic update:** updating what's on screen immediately when
 the user acts (e.g. picks a new status from a dropdown), _before_ the

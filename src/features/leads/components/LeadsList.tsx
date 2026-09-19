@@ -21,9 +21,9 @@ import {
 
 import { Lead, LeadStatus } from "../types";
 import { LeadsEmptyState } from "./LeadsEmptyState";
-import { StatusBadge } from "./StatusBadge";
 import { Button } from "@/components/ui/button";
 import { DeleteLeadButton } from "./DeleteLeadButton";
+import { StatusSelect } from "./StatusSelect";
 
 type LeadsListProps = {
   leads: Lead[];
@@ -72,10 +72,7 @@ export function LeadsList({
       <ul className="flex flex-col gap-3 md:hidden">
         {leads.map((lead) => (
           <li key={lead.id}>
-            <LeadCard
-              lead={lead}
-              onEdit={() => openEditModal(lead)}
-            />
+            <LeadCard lead={lead} onEdit={() => openEditModal(lead)} />
           </li>
         ))}
       </ul>
@@ -102,7 +99,11 @@ export function LeadsList({
                   {lead.source ?? "—"}
                 </TableCell>
                 <TableCell>
-                  <StatusBadge status={lead.status} />
+                  <StatusSelect
+                    value={lead.status}
+                    leadName={lead.name}
+                    id={lead.id}
+                  />
                 </TableCell>
                 <TableCell className="text-muted-foreground">
                   {formatFollowUp(lead.next_follow_up)}
@@ -113,10 +114,7 @@ export function LeadsList({
                 <TableCell className="px-4 text-right">
                   <div className="flex items-center justify-end gap-1">
                     <EditLeadButton onClick={() => openEditModal(lead)} />
-                    <DeleteLeadButton
-                      leadId={lead.id}
-                      leadName={lead.name}
-                    />
+                    <DeleteLeadButton leadId={lead.id} leadName={lead.name} />
                   </div>
                 </TableCell>
               </TableRow>
@@ -143,13 +141,7 @@ function EditLeadButton({ onClick }: { onClick: () => void }) {
   );
 }
 
-function LeadCard({
-  lead,
-  onEdit,
-}: {
-  lead: Lead;
-  onEdit: () => void;
-}) {
+function LeadCard({ lead, onEdit }: { lead: Lead; onEdit: () => void }) {
   return (
     <Card>
       <CardHeader>
@@ -158,12 +150,12 @@ function LeadCard({
           {lead.source ?? "No source"}
         </CardDescription>
         <CardAction className="flex items-center gap-1">
-          <StatusBadge status={lead.status} />
           <EditLeadButton onClick={onEdit} />
           <DeleteLeadButton leadId={lead.id} leadName={lead.name} />
         </CardAction>
       </CardHeader>
-      <CardContent className="flex flex-col gap-1 text-base">
+      <CardContent className="flex flex-col gap-2 text-base">
+        <StatusSelect value={lead.status} leadName={lead.name} id={lead.id} />
         <p>
           <span className="text-muted-foreground">Follow-up </span>
           {formatFollowUp(lead.next_follow_up)}
