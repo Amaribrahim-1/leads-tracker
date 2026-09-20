@@ -15,6 +15,7 @@ import { LEAD_STATUSES, STATUS_LABELS } from "../statusLabels";
 import { STATUS_BADGE_CLASS } from "../statusStyles";
 import { LeadStatus } from "../types";
 import { useUpdateLeadStatus } from "../hooks/useUpdateLeadStatus";
+import { blockIfOffline } from "@/lib/isBrowserOffline";
 
 type StatusSelectProps = {
   value: LeadStatus;
@@ -27,6 +28,7 @@ export function StatusSelect({ value, leadName, id }: StatusSelectProps) {
 
   function handleStatusChange(next: LeadStatus | null) {
     if (!next || next === value || isPending) return;
+    if (blockIfOffline()) return;
 
     mutate(
       { id, status: next },

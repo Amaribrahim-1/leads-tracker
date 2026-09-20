@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { useDeleteLead } from "../hooks/useDeleteLead";
+import { blockIfOffline } from "@/lib/isBrowserOffline";
 
 export function DeleteLeadButton({
   leadId,
@@ -29,6 +30,8 @@ export function DeleteLeadButton({
   const { mutate, isPending } = useDeleteLead();
 
   function handleConfirm() {
+    if (blockIfOffline()) return;
+
     mutate(leadId, {
       onSuccess: () => {
         toast.success("Lead deleted");

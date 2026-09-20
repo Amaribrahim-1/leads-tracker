@@ -432,7 +432,7 @@ Zustand-vs-URL choice above — you wire the filter. No extra routes.
 
 ---
 
-- [ ] Task 14 — Offline banner (`useOffline`)
+- [x] Task 14 — Offline banner (`useOffline`)
 
 **Term —** `useOffline`**:** an experimental Next.js 16.3 hook from
 `next/offline`. It returns a boolean: `true` when the browser fires an
@@ -453,15 +453,30 @@ shadcn/ui + Lucide if you want an icon; do not hand-build a toast
 system (`Toaster` is already in the layout). Banner needs a
 `role="status"` so screen readers hear the connectivity change.
 
-**What this does _not_ cover:** `getLeads` / create / update / delete
-go through TanStack Query + the browser Supabase client, not Server
-Actions. Those stay on TanStack's own retry policy — the official
-offline guide says that explicitly. Do not add a Server Action layer,
-a `/leads/[id]` detail page, Cache Components, Partial Prefetching, or
-a service worker just to "use" the hook. There is no detail page in
-this app (Task 13). If a list `isPending` spinner or a mutation button
-looks identical to a slow server while offline, that is expected; the
-banner is what tells the user why. Do not invent a second retry loop.
+**Added same task (banner was not enough):**
+
+1. **`error.tsx`** — Next App Router error boundary for the `/` segment
+   (`src/app/error.tsx`). Catches uncaught render errors (the red overlay
+   when a full reload runs `getLeads` on the server with no network).
+   Must be `'use client'`. This Next version’s recover prop is `retry`
+   (stable in 16.3), not `reset`. Does **not** wrap the root `layout`
+   (banner stays). Do not add `global-error.tsx` unless the layout
+   itself throws.
+
+2. **Supabase mutations while offline** — create / update / delete /
+   status must not hang on `isPending`. Before calling `supabase`, if
+   `navigator.onLine` is `false`, `throw` a clear `Error` so TanStack
+   surfaces `isError` (modal already shows `submitError`; delete already
+   toasts `onError`). One tiny helper, called from the existing API
+   helpers — not a second retry loop, not `networkMode` gymnastics, not
+   Server Actions. `getLeads` on full reload still goes through
+   `error.tsx`, not this helper.
+
+**What this does _not_ cover:** Do not add a Server Action layer, a
+`/leads/[id]` detail page, Cache Components, Partial Prefetching, or a
+service worker. A full page reload while offline still cannot render
+the HTML without the network — `error.tsx` is the fallback UI, not
+offline caching.
 
 **Why last:** extra learning, not in `project-spec.md`. Same parking
 lot as Tasks 12–13. The app is fully usable without it. Needs a real
@@ -477,12 +492,11 @@ hung Next navigation resumes without a second click. A full page
 reload while offline still fails — that needs a service worker, which
 is out of scope.
 
-**Cursor's role:** the one-line `experimental: { useOffline: true }` in
-`next.config.ts` is config-only — Cursor wires it when you start this
-task. Talk through what the flag retries vs what TanStack Query owns,
-and how to test it. You write `OfflineBanner` and mount it in
-`src/app/layout.tsx`. Likely home: `src/components/OfflineBanner.tsx`
-(app chrome, not `features/leads/`).
+**Cursor's role:** config line + `OfflineBanner` chrome + `error.tsx`
+presentational UI when asked. Talk through `retry` vs `reset`, layout
+vs page errors, and why mutations should throw early instead of
+waiting on `Supabase`. You write the `assertOnline` helper and call it
+from the mutate API helpers.
 
 ---
 

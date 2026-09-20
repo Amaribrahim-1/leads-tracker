@@ -25,6 +25,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { blockIfOffline } from "@/lib/isBrowserOffline";
 import { useCreateLead } from "../hooks/useCreateLead";
 import { useUpdateLead } from "../hooks/useUpdateLead";
 import { LeadFormType, leadSchema } from "../schema";
@@ -79,6 +80,8 @@ export function LeadModal() {
   }
 
   function onSubmit(data: LeadFormType) {
+    if (blockIfOffline()) return;
+
     if (isAdd) {
       createLead(data, {
         onSuccess: () => {
