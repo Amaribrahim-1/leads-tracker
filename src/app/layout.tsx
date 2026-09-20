@@ -1,3 +1,4 @@
+import { OfflineBanner } from "@/components/OfflineBanner";
 import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <Provider>
+          <OfflineBanner />
           <main className="flex min-h-full flex-1 flex-col">{children}</main>
           <Toaster />
         </Provider>
